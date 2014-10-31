@@ -1,6 +1,8 @@
 var net = require('net');
+var request = require('request');
 
 var HOST = '184.168.221.61';
+// var HOST = '0.0.0.0';
 var PORT = 6969;
 
 // Create a server instance, and chain the listen function to it
@@ -18,6 +20,16 @@ net.createServer(function(sock) {
         // Write the data back to the socket, the client will receive it as data from the server
         sock.write('You said "' + data + '"');
         
+        request.get(
+            'http://softbot-ras.herokuapp.com/remoteToOrigin/12/1/1/1234567/1/10/02/1991/12/45/30',
+            { form: { key: 'value' } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body)
+                }
+            }
+        );
+
     });
     
     // Add a 'close' event handler to this instance of socket
